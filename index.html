@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ana Romero · Flowers & Plants</title>
+<meta name="description" content="Ana Romero — flowers and plants. Call, text, or follow along on Instagram, Facebook, and YouTube.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#10261c">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script>
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches === false && "IntersectionObserver" in window) {
+    document.documentElement.classList.add("js");
+  }
+</script>
+<style>
+  :root {
+    --ink: #10261c;
+    --cream: #fbf6ee;
+    --cream-soft: #f3ece3;
+    --pink: #f2a8c2;
+    --gold: #f3d36b;
+    --orange: #f0a05a;
+    --purple: #c9a4e4;
+    --glass: rgba(14, 36, 28, .46);
+    --glass-line: rgba(255, 255, 255, .46);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; color-scheme: dark; }
+  html, body { overflow-x: hidden; background: var(--ink); }
+  body {
+    color: var(--cream);
+    font-family: "Nunito", system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: rgba(242, 168, 194, .45); color: #fff; }
+  img { display: block; }
+  a { -webkit-tap-highlight-color: transparent; }
+
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: #143028;
+    overflow: hidden;
+  }
+  .hero-photo {
+    position: absolute;
+    inset: -4%;
+    width: 108%;
+    height: 108%;
+    object-fit: cover;
+    transform-origin: center;
+    animation: ken 36s ease-in-out infinite alternate;
+  }
+  .shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(8, 22, 16, .6) 0%, rgba(8, 22, 16, .48) 42%, rgba(8, 22, 16, .64) 100%),
+      radial-gradient(ellipse 88% 48% at 50% 34%, rgba(5, 14, 10, .5), transparent 72%),
+      radial-gradient(540px 440px at -4% 100%, rgba(214, 96, 140, .38), transparent 70%),
+      radial-gradient(500px 420px at 106% 4%, rgba(146, 92, 196, .36), transparent 70%),
+      radial-gradient(480px 400px at 104% 96%, rgba(232, 146, 72, .34), transparent 70%),
+      radial-gradient(400px 340px at -2% 2%, rgba(240, 204, 100, .28), transparent 70%);
+  }
+
+  .petals {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .petal {
+    position: absolute;
+    top: -12%;
+    left: var(--x);
+    width: var(--s);
+    height: calc(var(--s) * 1.4);
+    background: var(--c);
+    border-radius: 80% 0 80% 0;
+    opacity: 0;
+    animation: fall var(--d) linear var(--delay) infinite;
+  }
+  .petal:nth-child(1) { --x: 8%; --s: 13px; --c: #f2a3c4; --d: 17s; --delay: -2s; --drift: 28px; }
+  .petal:nth-child(2) { --x: 24%; --s: 9px; --c: #d7b4f0; --d: 20s; --delay: -9s; --drift: -22px; }
+  .petal:nth-child(3) { --x: 46%; --s: 15px; --c: #f3d36b; --d: 22s; --delay: -5s; --drift: 18px; }
+  .petal:nth-child(4) { --x: 64%; --s: 11px; --c: #f0a06a; --d: 16s; --delay: -12s; --drift: -30px; }
+  .petal:nth-child(5) { --x: 82%; --s: 14px; --c: #e98ab4; --d: 21s; --delay: -7s; --drift: 24px; }
+  .petal:nth-child(6) { --x: 34%; --s: 8px; --c: #e4c4f6; --d: 19s; --delay: -15s; --drift: 14px; }
+
+  .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+  .line { color: inherit; }
+  main, footer { position: relative; z-index: 2; }
+
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    align-items: center;
+    justify-items: center;
+    padding:
+      max(18px, env(safe-area-inset-top))
+      20px
+      max(86px, calc(env(safe-area-inset-bottom) + 78px));
+    position: relative;
+    z-index: 2;
+  }
+  .hero-copy {
+    width: min(920px, 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: fadeup 1.05s ease backwards;
+  }
+  .portrait {
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: linear-gradient(145deg, #e7a0b8, #8a63b8 46%, #2f6b48);
+    border: 1px solid rgba(255, 255, 255, .55);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .28), inset 0 0 0 4px rgba(255, 255, 255, .12);
+  }
+  .portrait svg { width: 40px; height: 40px; color: rgba(255, 255, 255, .92); }
+  .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  h1 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(2.9rem, 13.5vw, 7.5rem);
+    line-height: .95;
+    letter-spacing: -.02em;
+    color: var(--cream);
+    text-shadow: 0 2px 22px rgba(0, 0, 0, .45);
+    text-wrap: balance;
+  }
+  .tagline {
+    margin-top: 8px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.55rem, 5.2vw, 2.8rem);
+    color: #f8c6d8;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, .4);
+  }
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 58px;
+    padding: 12px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--glass-line);
+    background: var(--glass);
+    color: var(--cream);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: .01em;
+    white-space: nowrap;
+    backdrop-filter: blur(16px) saturate(1.35);
+    -webkit-backdrop-filter: blur(16px) saturate(1.35);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .32), 0 10px 28px rgba(0, 0, 0, .2);
+    transition: filter .2s ease, border-color .2s ease, background-color .2s ease;
+    touch-action: manipulation;
+  }
+  .btn svg { width: 22px; height: 22px; flex: none; }
+  .btn.call {
+    width: min(100%, 300px);
+    min-height: 68px;
+    margin-top: 22px;
+    padding: 16px 36px;
+    font-size: 21px;
+    font-weight: 800;
+    color: #3a2416;
+    background: linear-gradient(135deg, #f6b5cc 0%, #f6c56a 55%, #f3a15a 100%);
+    border-color: rgba(255, 255, 255, .72);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .85), 0 14px 34px rgba(214, 120, 90, .38);
+  }
+  .btn:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+  }
+  .btn:active { filter: brightness(.96); }
+  .links {
+    width: min(520px, 100%);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    align-self: end;
+  }
+  .links a:last-child { grid-column: 1 / -1; }
+  .links .btn { animation: fadeup .8s ease backwards; }
+  .links .btn:nth-child(1) { animation-delay: .12s; }
+  .links .btn:nth-child(2) { animation-delay: .18s; }
+  .links .btn:nth-child(3) { animation-delay: .24s; }
+  .links .btn:nth-child(4) { animation-delay: .3s; }
+  .links .btn:nth-child(5) { animation-delay: .36s; }
+
+  .bloom-edge {
+    position: relative;
+    z-index: 1;
+    height: 128px;
+    margin: -64px 0 -52px;
+    pointer-events: none;
+  }
+  .bloom-edge img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 150vw;
+    height: 170px;
+    max-width: none;
+    object-fit: contain;
+    transform: translate(-50%, -50%);
+    color: transparent;
+  }
+  .bloom-edge.flip img { transform: translate(-50%, -50%) scaleX(-1); }
+
+  .garden { position: relative; z-index: 2; padding: 28px 0 64px; }
+  .wrap { width: min(1080px, calc(100% - 32px)); margin-inline: auto; }
+  .garden-head { text-align: center; margin-bottom: 22px; }
+  .garden h2 {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(2.5rem, 7vw, 4.25rem);
+    line-height: 1;
+    color: var(--cream);
+    text-shadow: 0 2px 16px rgba(0, 0, 0, .4);
+    text-wrap: balance;
+  }
+  .garden h2::after {
+    content: "";
+    width: 88px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #e989ab, #f3d36b 45%, #f0a05a 72%, #c9a4e4);
+  }
+  .intro {
+    max-width: 34ch;
+    margin: 14px auto 0;
+    color: var(--cream-soft);
+    font-size: 18px;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, .4);
+    text-wrap: balance;
+  }
+  .grows { display: grid; gap: 16px; }
+  .plant {
+    --tint: rgba(255, 255, 255, .14);
+    --icon: var(--cream);
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 18px;
+    border-radius: 26px;
+    background: var(--glass);
+    border: 1px solid var(--glass-line);
+    backdrop-filter: blur(18px) saturate(1.35);
+    -webkit-backdrop-filter: blur(18px) saturate(1.35);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28), 0 16px 40px rgba(0, 0, 0, .22);
+    transition: filter .2s ease, border-color .2s ease;
+  }
+  .plant.low { --tint: rgba(198, 160, 230, .3); --icon: #f3e2ff; }
+  .plant.succ { --tint: rgba(243, 211, 107, .26); --icon: #fbe7ae; }
+  .plant.trop { --tint: rgba(240, 164, 96, .28); --icon: #ffd5b4; }
+  .plant.herb { --tint: rgba(236, 150, 180, .3); --icon: #ffd5e6; }
+  .plant.special {
+    border-color: rgba(246, 214, 138, .78);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .32), 0 16px 40px rgba(0, 0, 0, .22), 0 0 0 1px rgba(246, 214, 138, .28);
+  }
+  .photo {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: 18px;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+  .photo.low { background: linear-gradient(160deg, #6a4a86, #1e4a3a 72%); }
+  .photo.succ { background: linear-gradient(160deg, #d4a85a, #2c5a40 70%); }
+  .photo.trop { background: linear-gradient(160deg, #e08a48, #1a5344 72%); }
+  .photo.herb { background: linear-gradient(160deg, #d46588, #2a6248 74%); }
+  .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+  .watermark { width: 72px; height: 72px; color: rgba(255, 255, 255, .8); }
+  .ribbon {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #f8e2a4, #f0a05a);
+    color: #3a2614;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .02em;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .2);
+  }
+  .plant-body { padding: 16px 12px 0; text-align: center; }
+  .icon-badge {
+    width: 54px;
+    height: 54px;
+    margin: 0 auto 10px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--tint);
+    color: var(--icon);
+    border: 1px solid rgba(255, 255, 255, .4);
+  }
+  .icon-badge svg { width: 30px; height: 30px; }
+  .plant h3 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.9rem;
+    line-height: 1.1;
+    color: #fffaf4;
+  }
+  .plant p { margin-top: 6px; color: var(--cream-soft); font-size: 17px; line-height: 1.45; }
+
+  footer {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 8px 20px max(36px, env(safe-area-inset-bottom));
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.35rem;
+    color: var(--cream-soft);
+    text-shadow: 0 2px 14px rgba(0, 0, 0, .4);
+  }
+
+  .grows .plant:nth-child(2) { --delay: .08s; }
+  .grows .plant:nth-child(3) { --delay: .16s; }
+  .grows .plant:nth-child(4) { --delay: .24s; }
+  .js .reveal { opacity: 0; }
+  .js .reveal.in { animation: fadeup .9s ease var(--delay, 0s) both; }
+
+  @keyframes ken {
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
+  }
+  @keyframes fadeup {
+    from { opacity: 0; translate: 0 16px; }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes fall {
+    0% { translate: 0 -8vh; rotate: 0deg; opacity: 0; }
+    12% { opacity: .85; }
+    100% { translate: var(--drift) 112vh; rotate: 260deg; opacity: 0; }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover { filter: brightness(1.08); border-color: rgba(255, 255, 255, .75); }
+    .btn.call:hover { filter: brightness(1.05) saturate(1.05); }
+    .plant:hover { border-color: rgba(255, 255, 255, .68); }
+  }
+  @media (min-width: 900px) {
+    .hero { padding-inline: 40px; }
+    .portrait { width: 104px; height: 104px; margin-bottom: 16px; }
+    .portrait svg { width: 48px; height: 48px; }
+    .btn.call { min-height: 74px; font-size: 22px; }
+    .links {
+      width: min(1040px, calc(100% - 8px));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .links a:last-child { grid-column: auto; }
+    .links .btn { min-height: 62px; font-size: 17px; }
+    .bloom-edge { height: 176px; margin: -86px 0 -70px; }
+    .bloom-edge img { height: 220px; }
+    .wrap { width: min(1080px, calc(100% - 80px)); }
+    .grows { grid-template-columns: 1fr 1fr; gap: 22px; }
+    .photo { aspect-ratio: 16 / 10; }
+    .garden { padding-bottom: 80px; }
+  }
+  @media (max-width: 380px) {
+    .btn { font-size: 15px; padding-inline: 10px; gap: 7px; }
+    .btn svg { width: 18px; height: 18px; }
+    .btn.call { font-size: 19px; }
+  }
+  @media (max-height: 720px) {
+    .portrait { width: 60px; height: 60px; margin-bottom: 8px; }
+    .portrait svg { width: 30px; height: 30px; }
+    h1 { font-size: 2.6rem; }
+    .tagline { font-size: 1.4rem; }
+    .btn { min-height: 50px; }
+    .btn.call { min-height: 56px; margin-top: 12px; }
+    .links { gap: 8px; }
+    .hero { padding-bottom: max(70px, calc(env(safe-area-inset-bottom) + 64px)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-photo,
+    .petal,
+    .hero-copy,
+    .links .btn,
+    .js .reveal.in { animation: none; }
+    .petals { display: none; }
+    .js .reveal,
+    .js .reveal.in { opacity: 1; }
+    .btn, .plant { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-low" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M32 56C26 44 23 30 27 14"/>
+        <path d="M32 56C38 44 41 30 37 14"/>
+        <path d="M32 58C22 46 16 32 21 12"/>
+        <path d="M32 58C42 46 48 32 43 12"/>
+      </g>
+    </symbol>
+    <symbol id="i-succ" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M32 36c0-8-3.2-13-.1-21 3.3 8 .1 13 .1 21"/>
+        <path d="M32 36c0-8-3.2-13-.1-21 3.3 8 .1 13 .1 21" transform="rotate(60 32 36)"/>
+        <path d="M32 36c0-8-3.2-13-.1-21 3.3 8 .1 13 .1 21" transform="rotate(120 32 36)"/>
+        <path d="M32 36c0-8-3.2-13-.1-21 3.3 8 .1 13 .1 21" transform="rotate(180 32 36)"/>
+        <path d="M32 36c0-8-3.2-13-.1-21 3.3 8 .1 13 .1 21" transform="rotate(240 32 36)"/>
+        <path d="M32 36c0-8-3.2-13-.1-21 3.3 8 .1 13 .1 21" transform="rotate(300 32 36)"/>
+        <circle cx="32" cy="36" r="2.3" fill="currentColor" stroke="none"/>
+      </g>
+    </symbol>
+    <symbol id="i-trop" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M32 58V40"/>
+        <path d="M32 42C20 44 11 34 13 24c3-8 10-7 13 0 0-8 5-12 8-8 4-5 9 0 8 8 6-6 13-4 12 4 1 10-8 16-22 14z"/>
+        <path d="M32 18v18"/>
+        <path d="M23 28h7M35 28h7M24 34h6M35 34h6"/>
+      </g>
+    </symbol>
+    <symbol id="i-herb" viewBox="0 0 64 64">
+      <g fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M32 56V16"/>
+        <path d="M32 46C24 44 18 38 20 32c5 3 10 8 12 14z"/>
+        <path d="M32 46c8-2 14-8 12-14-5 3-10 8-12 14z"/>
+        <path d="M32 34c-7-2-12-8-10-13 4 3 8 8 10 13z"/>
+        <path d="M32 34c7-2 12-8 10-13-4 3-8 8-10 13z"/>
+        <path d="M32 22c-4-5-3-10 0-13 3 3 4 8 0 13z"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="backdrop" aria-hidden="true">
+  <img class="hero-photo" src="assets/hero.jpg" alt="" onerror="this.remove()">
+  <div class="shade"></div>
+</div>
+<div class="petals" aria-hidden="true"><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span></div>
+
+<main>
+  <header class="hero">
+    <div class="hero-copy">
+      <div class="portrait">
+        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <g fill="#fffaf6">
+            <ellipse cx="32" cy="15" rx="7" ry="13"/>
+            <ellipse cx="32" cy="15" rx="7" ry="13" transform="rotate(72 32 34)"/>
+            <ellipse cx="32" cy="15" rx="7" ry="13" transform="rotate(144 32 34)"/>
+            <ellipse cx="32" cy="15" rx="7" ry="13" transform="rotate(216 32 34)"/>
+            <ellipse cx="32" cy="15" rx="7" ry="13" transform="rotate(288 32 34)"/>
+          </g>
+          <circle cx="32" cy="34" r="6" fill="#f6d56b"/>
+        </svg>
+        <img src="assets/photo.jpg" alt="Ana Romero" onerror="this.remove()">
+      </div>
+      <h1>Ana Romero</h1>
+      <p class="tagline">Flowers &amp; Plants</p>
+      <a class="btn call" data-reach="call">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+        Call Me
+      </a>
+    </div>
+    <nav class="links" aria-label="Contact Ana">
+      <a class="btn" data-reach="text">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.8-.9L3 21l1.9-5.2A8.4 8.4 0 1 1 21 11.5z"/></svg>
+        Text
+      </a>
+      <a class="btn" data-reach="mail">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        Email
+      </a>
+      <a class="btn" href="https://www.instagram.com/anaromero7603" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor" stroke="none"/></svg>
+        Instagram
+      </a>
+      <a class="btn" href="https://www.facebook.com/ana.romero.921776" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h-2.5A4.5 4.5 0 0 0 8 7.5V10H5.5v3.5H8V21h3.5v-7.5H14l.5-3.5h-3V7.8c0-.9.6-1.3 1.3-1.3H15z"/></svg>
+        Facebook
+      </a>
+      <a class="btn" href="https://www.youtube.com/@Anneplants" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3z" fill="currentColor" stroke="none"/></svg>
+        YouTube
+      </a>
+    </nav>
+  </header>
+<script>
+(function () {
+  var phone = ["+1", "323", "481", "3640"].join("");
+  var mail = ["lavender", "polanco", "@", "gmail", ".", "com"].join("");
+  var links = { call: "tel:", text: "sms:", mail: "mailto:" };
+  Object.keys(links).forEach(function (key) {
+    var node = document.querySelector("[data-reach='" + key + "']");
+    if (!node) return;
+    node.href = links[key] + (key === "mail" ? mail : phone);
+  });
+})();
+</script>
+
+  <div class="bloom-edge" aria-hidden="true">
+    <img src="assets/flowers-edge.png" alt="" onerror="this.parentElement.remove()">
+  </div>
+
+  <section class="garden" aria-labelledby="garden">
+    <div class="wrap">
+      <div class="garden-head reveal">
+        <h2 id="garden">What I Grow</h2>
+        <p class="intro">A little bit of green for every corner of your home.</p>
+      </div>
+      <div class="grows">
+        <article class="plant glass reveal low special">
+          <div class="photo low">
+            <svg class="watermark line" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><use href="#i-low"/></svg>
+            <img src="assets/low-light.jpg" alt="Low-light indoor plants" loading="lazy" onerror="this.remove()">
+            <span class="ribbon">My specialty ✨</span>
+          </div>
+          <div class="plant-body">
+            <span class="icon-badge" aria-hidden="true"><svg class="line" viewBox="0 0 64 64" focusable="false"><use href="#i-low"/></svg></span>
+            <h3>Low-Light Plants</h3>
+            <p>Plants that thrive in shady corners, bedrooms, and offices.</p>
+          </div>
+        </article>
+        <article class="plant glass reveal succ">
+          <div class="photo succ">
+            <svg class="watermark line" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><use href="#i-succ"/></svg>
+            <img src="assets/succulents.jpg" alt="Succulents" loading="lazy" onerror="this.remove()">
+          </div>
+          <div class="plant-body">
+            <span class="icon-badge" aria-hidden="true"><svg class="line" viewBox="0 0 64 64" focusable="false"><use href="#i-succ"/></svg></span>
+            <h3>Succulents</h3>
+            <p>Easy-care beauties for sunny windowsills.</p>
+          </div>
+        </article>
+        <article class="plant glass reveal trop">
+          <div class="photo trop">
+            <svg class="watermark line" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><use href="#i-trop"/></svg>
+            <img src="assets/tropical.jpg" alt="Tropical plants" loading="lazy" onerror="this.remove()">
+          </div>
+          <div class="plant-body">
+            <span class="icon-badge" aria-hidden="true"><svg class="line" viewBox="0 0 64 64" focusable="false"><use href="#i-trop"/></svg></span>
+            <h3>Tropical Plants</h3>
+            <p>Big, lush leaves that bring the jungle home.</p>
+          </div>
+        </article>
+        <article class="plant glass reveal herb">
+          <div class="photo herb">
+            <svg class="watermark line" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><use href="#i-herb"/></svg>
+            <img src="assets/herbs.jpg" alt="Potted herbs" loading="lazy" onerror="this.remove()">
+          </div>
+          <div class="plant-body">
+            <span class="icon-badge" aria-hidden="true"><svg class="line" viewBox="0 0 64 64" focusable="false"><use href="#i-herb"/></svg></span>
+            <h3>Herbs</h3>
+            <p>Fresh herbs for your kitchen. My favorites!</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="bloom-edge flip" aria-hidden="true">
+    <img src="assets/flowers-edge.png" alt="" onerror="this.parentElement.remove()">
+  </div>
+</main>
+
+<footer>Grown with love in Los Angeles 🌿</footer>
+
+<script>
+(function () {
+  if (!document.documentElement.classList.contains("js")) return;
+  var nodes = document.querySelectorAll(".reveal");
+  if (!nodes.length) return;
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("in");
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.16, rootMargin: "0px 0px -4% 0px" });
+  nodes.forEach(function (node) { observer.observe(node); });
+})();
+</script>
+</body>
+</html>
